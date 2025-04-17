@@ -1,9 +1,8 @@
-import java.util.Objects;
+import java.text.DecimalFormat;
 
 /**
  * Клас Computer представляє конфігурацію персонального комп'ютера, що складається з різних компонентів:
  * процесора, материнської плати, оперативної пам'яті, накопичувача, відеокарти, блока живлення та корпусу.
- * 
  * Клас підтримує копіювання, перевірку еквівалентності, розрахунок загальної вартості та виведення конфігурації.
  */
 public class Computer {
@@ -44,6 +43,7 @@ public class Computer {
      * @param other інший комп'ютер для копіювання
      */
     public Computer(Computer other) {
+        if (other == null) throw new NullPointerException("Computer cannot be null");
         this.cpu = new CPU(other.cpu);
         this.motherboard = new Motherboard(other.motherboard);
         this.ram = new RAM(other.ram);
@@ -197,6 +197,8 @@ public class Computer {
      * Виводить конфігурацію комп'ютера у консоль, включаючи всі компоненти та їхню вартість.
      */
     public void printConfiguration() {
+        DecimalFormat df = new DecimalFormat("#.00");
+
         System.out.println("=== Комп'ютерна конфігурація ===");
         System.out.println("CPU: " + cpu.getName() + " - $" + cpu.getPrice());
         System.out.println("Motherboard: " + motherboard.getName() + " - $" + motherboard.getPrice());
@@ -205,7 +207,7 @@ public class Computer {
         System.out.println("GPU: " + gpu.getName() + " - $" + gpu.getPrice());
         System.out.println("PSU: " + psu.getName() + " - $" + psu.getPrice());
         System.out.println("Case: " + pcCase.getName() + " - $" + pcCase.getPrice());
-        System.out.println("Загальна вартість: $" + getTotalPrice());
+        System.out.println("Загальна вартість: $" + df.format(getTotalPrice()));
     }
 
     /**
@@ -247,5 +249,7 @@ public class Computer {
                 psu.equals(that.psu) &&
                 pcCase.equals(that.pcCase);
     }
+
+
 
 }
